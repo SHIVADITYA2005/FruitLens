@@ -1,30 +1,61 @@
-# FruitLens: AI-Powered Fruit Classification
+FruitLens: Random Forest Image Classifier
 
-**FruitLens** is an end-to-end computer vision pipeline designed to identify and categorize fruit species from raw image data. Built using Python, this project demonstrates the practical application of ensemble learning in image recognition, providing a seamless transition from model training to real-time web deployment.
+FruitLens is an interactive machine learning application that identifies and categorizes fruit species using a custom-trained ensemble learning model. Built with Scikit-Learn and OpenCV, this project demonstrates a complete AI lifecycle—from data preprocessing and model training to real-time inference via a web-based interface.
 
-## 🍎 Supported Categories
-The model is currently trained to recognize five distinct fruit types:
-* **Apple**, **Banana**, **Mango**, **Strawberry**, and **Grape**.
+🧠 Model Architecture
 
-## 🛠️ Technical Architecture
-* **Image Preprocessing:** Utilizes **OpenCV** to normalize datasets, resizing raw images to a uniform $64 \times 64$ pixel grid and flattening them into numerical feature vectors.
-* **Ensemble Learning:** Employs a **Random Forest Classifier** with 100 estimators to navigate high-dimensional pixel data and achieve robust classification.
-* **Interactive Deployment:** Integrated with **Gradio** to provide a user-friendly web interface for instant drag-and-drop image classification.
-* **Model Persistence:** Uses **joblib** for efficient serialization, ensuring the trained weights (`fruit_classifier.pkl`) are portable and production-ready.
+The model is trained on a custom dataset of fruit images and utilizes a Random Forest algorithm structure:
+
+Input Layer: Resizes raw RGB images to a $64 \times 64$ pixel grid and flattens them into 12,288-dimensional arrays (64x64x3).
+
+Classifier: An ensemble of 100 decision trees (n_estimators=100) utilizing the Random Forest algorithm for robust, non-linear feature extraction and classification.
+
+Output Layer: Outputs the predicted fruit category based on majority voting across 5 possible classes (Apple, Banana, Mango, Strawberry, Grape).
+
+🛠️ Tech Stack
+
+Machine Learning Framework: Scikit-Learn
+
+Web UI / Deployment: Gradio (Interactive Image Upload)
+
+Image Processing: OpenCV (cv2), NumPy
+
+🚀 Getting Started
+
+Prerequisites
+
+Ensure you have Python installed, then install the required dependencies:
+
+pip install scikit-learn gradio numpy opencv-python joblib
 
 
+Running the Application
 
-[Image of a machine learning workflow for image classification]
+Clone the repository and navigate to the project directory.
+
+Run the Python training script to process the images, train the model, and save the serialized weights:
+
+python prp.py
 
 
-## 📁 Project Structure
-* `prp.py`: The training script responsible for data loading, preprocessing, and model fitting.
-* `finalprp.py`: The inference script that loads the saved model and launches the Gradio UI.
-* `fruit_classifier.pkl`: The serialized Random Forest model (~14.7 MB).
+Usage: Run the inference script or the finalPRP.ipynb notebook to launch the Gradio web interface. Once the terminal provides a local URL (e.g., http://127.0.0.1:7860), open it in your browser. Upload any image of the supported fruits, and the model will display the prediction in real-time.
 
-## 🚀 Getting Started
+⚙️ Data Pipeline & Preprocessing
 
-### Prerequisites
-Install the required dependencies using pip:
-```bash
-pip install opencv-python numpy scikit-learn gradio joblib
+To ensure high accuracy on user-uploaded images, the data pipeline automatically preprocesses the inputs to match the training conditions:
+
+Reads the raw images using OpenCV.
+
+Resizes the images to a standardized $64 \times 64$ pixel grid to maintain uniform feature extraction.
+
+Flattens the 3-channel (RGB) 2D image into a 1D numerical array.
+
+Handles dataset generation by dynamically shuffling and capping training samples at a maximum of 800 images per fruit category to prevent severe class imbalance.
+
+📊 Training Results
+
+The model is trained using the RandomForestClassifier with a fixed random state (random_state=42) for reproducibility. By leveraging ensemble learning, it efficiently navigates high-dimensional pixel data without suffering from overfitting, achieving robust classification accuracy across the targeted fruit categories.
+
+📜 License
+
+Distributed under the MIT License.
